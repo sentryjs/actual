@@ -14,7 +14,8 @@ export type FormatType =
   | 'number'
   | 'percentage'
   | 'financial'
-  | 'financial-with-sign';
+  | 'financial-with-sign'
+  | 'financial-abs';
 
 function format(
   value: unknown,
@@ -54,6 +55,21 @@ function format(
       }
 
       return integerToCurrency(value, formatter);
+    case 'financial-abs':
+      if (value == null || value === '' || value === 0) {
+        return integerToCurrency(0, formatter);
+      } else if (typeof value === 'string') {
+        const parsed = Math.abs(parseFloat(value));
+        value = isNaN(parsed) ? 0 : parsed;
+      }
+
+      if (typeof value !== 'number') {
+        throw new Error(
+          'Value is not a number (' + typeof value + '): ' + value,
+        );
+      }
+
+      return integerToCurrency(Math.abs(value), formatter);
     default:
       throw new Error('Unknown format type: ' + type);
   }

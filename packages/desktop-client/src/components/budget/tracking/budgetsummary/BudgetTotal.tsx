@@ -51,7 +51,7 @@ export function BudgetTotal<
         </View>
 
         <Text>
-          <CellValue binding={current} type="financial" />
+          <CellValue binding={current} type="financial-abs" />
           <Text style={{ color: theme.pageTextSubdued, fontStyle: 'italic' }}>
             {' '}
             {t('of')}{' '}
